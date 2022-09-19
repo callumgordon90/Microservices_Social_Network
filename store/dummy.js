@@ -1,6 +1,6 @@
-const dc = {
+const db = {
     'user': [
-        { id: 1, name: 'Carlos' },
+        { id: 1, name: 'Callum' },
     ],
 };
 
