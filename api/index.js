@@ -1,6 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const swaggerUi = require('swagger-ui-express');
+
+
 const config = require('../config');
 const user = require('./components/user/network');
 
