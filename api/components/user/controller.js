@@ -14,9 +14,14 @@ module.exports = function (injectedStore) {
         return store.list(TABLA);
     }
 
+    function get(id) {
+        return store.get(TABLA, id);
+    }
 
-        return {
-            list,
-        };
+
+    return {
+        list,
+        get
+    };
 }
 
