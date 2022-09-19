@@ -7,6 +7,14 @@ const Controller = require ('./index');
 
 const router = express.Router();
 
+// Routes:
+router.get('/', list)
+router.get('/:id', get);
+router.post('/', upsert);
+router.put('/', upsert);
+
+
+//Internal functions:
 router.get('/', function (req, res) {
     Controller.list()
         .then((lista) => {
