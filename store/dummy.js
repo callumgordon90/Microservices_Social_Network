@@ -1,4 +1,8 @@
-const dc = {};
+const dc = {
+    'user': [
+        { id: 1, name: 'Carlos' },
+    ],
+};
 
 function list(tabla) {
     return db [tabla];

@@ -6,4 +6,6 @@ function list() {
     return store.list(TABLA);
 }
 
-module.exports = router;
+module.exports = {
+    list,
+};
