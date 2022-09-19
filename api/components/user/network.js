@@ -1,3 +1,5 @@
+// THIS FILE (NETWORK.JS SOLO TRABAJA CON LA CAPA DE RED)
+
 const express = require('express');
 
 const response = require('../../../network/response');
