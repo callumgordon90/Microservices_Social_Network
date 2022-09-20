@@ -1,18 +1,56 @@
-const auth = require('../../../auth');
+const jwt = require('jsonwebtoken');
+const config = require('../config');
+const error = require('../utils/error');
 
-module.exports = function checkAuth(action) {
+const secret = config.jwt.secret;
 
-    function middleware(req, res, next) {
-        switch(action) {
-            case 'update':
-                const owner = req.body.id;
-                auth.check.own(req, owner);
-                break;
+function sign(data) {
+    return jwt.sign(data, secret);
+}
 
-            default:
-                next();
+function verify(token) {
+    return jwt.verify(token, secret)
+}
+
+const check = {
+    own: function(req, owner) {
+        const decoded = decodeHeader(req);
+        console.log(decoded);
+
+        if (decoded.id !== owner) {
+            throw error('No puedes hacer esto', 401);
         }
+    },
+
+    logged: function(req, owner) {
+        const decoded = decodeHeader(req);
+    },
+}
+
+function getToken(auth) {
+    if (!auth) {
+        throw error('No viene token', 401);
     }
 
-    return middleware;
+    if (auth.indexOf('Bearer ') === -1) {
+        throw error('Formato invalido', 401);
+    }
+
+    let token = auth.replace('Bearer ', '');
+    return token;
 }
+
+function decodeHeader(req) {
+    const authorization = req.headers.authorization || '';
+    const token = getToken(authorization);
+    const decoded = verify(token);
+
+    req.user = decoded;
+
+    return decoded;
+}
+
+module.exports = {
+    sign,
+    check,
+};
