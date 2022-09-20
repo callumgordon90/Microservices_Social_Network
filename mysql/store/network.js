@@ -1,7 +1,7 @@
 //this network.js will allow us to create all of the necessary tables
 const express = require('express');
 
-const response = require('../../../network/response');
+const response = require('../network/response');
 const Store = require('../store/mysql');
 
 const router = express.Router();
