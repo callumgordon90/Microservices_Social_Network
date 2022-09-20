@@ -11,7 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 
-// ROUER
+// ROUTER
 
 app.use('/api/post', post);
 
