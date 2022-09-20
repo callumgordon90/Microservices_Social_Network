@@ -2,20 +2,25 @@
 
 const express = require('express');
 
+//This line imports middleware for authentification
+const secure = require('./secure');
+
+
 const response = require('../../../network/response');
-const Controller = require ('./index');
+const Controller = require('./index');
 
 const router = express.Router();
 
-// Routes:
+// Routes
 router.get('/', list)
 router.get('/:id', get);
 router.post('/', upsert);
-router.put('/', upsert);
 
+// Route for middleware authentification 
+router.put('/', secure('update'), upsert);
 
-//Internal functions:
-router.get('/', function (req, res) {
+// Internal functions
+function list(req, res) {
     Controller.list()
         .then((lista) => {
             response.success(req, res, lista, 200);
@@ -23,17 +28,29 @@ router.get('/', function (req, res) {
         .catch((err) => {
             response.error(req, res, err.message, 500);
         });
-});
+    
+}
 
-router.get('/.id', function (req, res) {
+function get(req, res) {
     Controller.get(req.params.id)
         .then((user) => {
-            response.success(req, res, lista, 200);
-        }).catch((err) => {
+            response.success(req, res, user, 200);
+        })
+        .catch((err) => {
             response.error(req, res, err.message, 500);
         });
     
-})
+}
 
+function upsert(req, res) {
+    Controller.upsert(req.body)
+        .then((user) => {
+            response.success(req, res, user, 201);
+        })
+        .catch((err) => {
+            response.error(req, res, err.message, 500);
+        });
+    
+}
 
 module.exports = router;
