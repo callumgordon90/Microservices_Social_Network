@@ -37,6 +37,10 @@ function createRemoteDB(host, port) {
             })
         })
     }
+
+    return{
+        list,
+    }
 }
 
 module.exports = createRemoteDB;
